@@ -128,11 +128,11 @@ namespace Project5pz {
 			// 
 			this->toolStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
 			this->toolStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(21) {
-				this->newToolStripButton,
-					this->openToolStripButton, this->saveToolStripButton, this->printToolStripButton, this->toolStripSeparator, this->cutToolStripButton,
-					this->copyToolStripButton, this->pasteToolStripButton, this->toolStripSeparator2, this->helpToolStripButton, this->toolStripSeparator1,
+				this->toolStripButton7,
+					this->toolStripButton8, this->newToolStripButton, this->openToolStripButton, this->saveToolStripButton, this->toolStripSeparator,
+					this->cutToolStripButton, this->copyToolStripButton, this->pasteToolStripButton, this->toolStripSeparator2, this->toolStripSeparator1,
 					this->toolStripButton3, this->toolStripButton1, this->toolStripButton2, this->toolStripSeparator3, this->toolStripButton4, this->toolStripButton5,
-					this->toolStripButton6, this->toolStripSeparator4, this->toolStripButton7, this->toolStripButton8
+					this->toolStripButton6, this->toolStripSeparator4, this->printToolStripButton, this->helpToolStripButton
 			});
 			this->toolStrip1->Location = System::Drawing::Point(0, 52);
 			this->toolStrip1->Name = L"toolStrip1";
@@ -225,6 +225,7 @@ namespace Project5pz {
 			this->helpToolStripButton->Name = L"helpToolStripButton";
 			this->helpToolStripButton->Size = System::Drawing::Size(29, 24);
 			this->helpToolStripButton->Text = L"He&lp";
+			this->helpToolStripButton->Click += gcnew System::EventHandler(this, &MyForm::helpToolStripButton_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -348,14 +349,19 @@ namespace Project5pz {
 			// toolStripStatusLabel1
 			// 
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(151, 20);
-			this->toolStripStatusLabel1->Text = L"toolStripStatusLabel1";
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(0, 20);
 			// 
 			// toolStripStatusLabel2
 			// 
 			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
 			this->toolStripStatusLabel2->Size = System::Drawing::Size(151, 20);
 			this->toolStripStatusLabel2->Text = L"toolStripStatusLabel2";
+			// 
+			// timer1
+			// 
+			this->timer1->Enabled = true;
+			this->timer1->Interval = 1000;
+			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
 			// 
 			// menuStrip1
 			// 
@@ -391,7 +397,7 @@ namespace Project5pz {
 					this->панельІнструментівToolStripMenuItem
 			});
 			this->панеліToolStripMenuItem->Name = L"панеліToolStripMenuItem";
-			this->панеліToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->панеліToolStripMenuItem->Size = System::Drawing::Size(140, 26);
 			this->панеліToolStripMenuItem->Text = L"Панелі";
 			this->панеліToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::панеліToolStripMenuItem_Click);
 			// 
@@ -491,14 +497,25 @@ private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) 
 	toolStrip1->Visible = true;
 }
 private: System::Void панельІнструментівToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	statusStrip1->Visible = панельІнструментівToolStripMenuItem->Checked;
+	toolStrip1->Visible = !(toolStrip1->Visible);
 }
 private: System::Void рядокСтануToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	statusStrip1->Visible = рядокСтануToolStripMenuItem->Checked;
+	statusStrip1->Visible = !(statusStrip1->Visible);
 }
 private: System::Void переглядToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void панеліToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
+		statusStrip1->Items[1]->Text = DateTime::Now.ToLongDateString();
+	}
+private: System::Void helpToolStripButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	MessageBox::Show("Це програма для редагування тексту. \n\n"
+		"Ви можете використовувати панель інструментів для форматування тексту, "
+		"включаючи вирівнювання, жирний, курсив та підкреслення.\n\n"
+		"Також доступні функції копіювання, вставки та вирізання тексту.\n\n"
+		"Для отримання додаткової інформації зверніться до документації програми.",
+		"Допомога", MessageBoxButtons::OK, MessageBoxIcon::Information);
 }
 };
 }
